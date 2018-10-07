@@ -2,12 +2,13 @@
 /node_modules
 
 # testing
-/coverage
+/test
 
-# production
-/build
+# build
+/dist
 
 # misc
+/obj
 .DS_Store
 .env.local
 .env.development.local

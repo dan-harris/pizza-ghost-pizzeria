@@ -1,0 +1,12 @@
+{
+  "compilerOptions": {
+    "outDir": "./wwwroot/client-dist/",
+    "noImplicitAny": true,
+    "module": "es6",
+    "target": "es5",
+    "jsx": "react",
+    "moduleResolution": "node",
+    "sourceMap": true,
+    "lib": ["es2016", "dom"]
+  }
+}
