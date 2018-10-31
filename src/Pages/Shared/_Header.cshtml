@@ -1,17 +1,9 @@
-<nav class="navbar navbar-expand-md navbar-dark bg-dark">
-  <a class="navbar-brand" href="#">LeanAspNetCore</a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
+<!-- inline styles + scripts -->
+<pgp-script client-script="header"></pgp-script>
+<pgp-style client-style="header"></pgp-style>
 
-  <div class="collapse navbar-collapse" id="navbarsExampleDefault">
-    <ul class="navbar-nav mr-auto">
-      <li class="nav-item">
-        <a class="nav-link" asp-page="Index">Home</a>
-      </li>
-      <!-- <li class="nav-item">
-        <a class="nav-link" asp-page="Form">Razor Pages Form</a>
-      </li> -->
-    </ul>
-  </div>
+<!-- nav bar -->
+<nav class="pgp-nav">
+  <pgp-a asp-page="/Index">Home</pgp-a>
+  <pgp-a asp-page="/Order/Index">Order</pgp-a>
 </nav>
