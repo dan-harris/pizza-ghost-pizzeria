@@ -12,7 +12,8 @@ module.exports = (env = {}, argv = {}) => {
     // ),
     entry: {
       core: "./src-client/core/core.ts",
-      header: "./src-client/partials/header/header.ts"
+      header: "./src-client/partials/header/header.ts",
+      logo: "./src-client/partials/logo/logo.ts"
     },
     output: {
       filename: "[name].js",

@@ -1,0 +1,39 @@
+.pgp-logo svg#logo__ghost {
+  height: 104px;
+  position: absolute;
+}
+
+.pgp-logo svg#logo__pizza-box {
+  height: 160px;
+  margin-top: 65px;
+  margin-left: 48px;
+  width: 200px;
+}
+
+.pgp-logo {
+  max-width: 840px;
+  display: flex;
+  position: relative;
+}
+
+.pgp-logo .logo__heading {
+  display: flex;
+  flex-direction: column;
+  margin-top: 57px;
+  padding-left: 0.5rem;
+  width: 535px;
+}
+
+.pgp-logo .logo__heading__heading {
+  text-transform: uppercase;
+  font-size: 4.5rem;
+  font-weight: 800;
+  margin: 0;
+}
+
+.pgp-logo .logo__heading__sub-heading {
+  font-size: 4rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  margin: 0rem;
+}

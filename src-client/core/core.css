@@ -6,7 +6,25 @@ body {
   margin: 0;
   height: 100%;
   width: 100%;
+  font-family: "Montserrat", sans-serif;
 }
 body {
   background-color: #ffffff;
+}
+
+.pgp-main-content {
+  height: 100%;
+  width: 100%;
+}
+
+.content-wrapper {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.content-wrapper--centred {
+  justify-content: center;
+  align-items: center;
 }
