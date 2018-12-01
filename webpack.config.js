@@ -11,8 +11,9 @@ module.exports = (env = {}, argv = {}) => {
     //   glob.sync("./**/*.ts*", { ignore: "./node_modules/**/*" })
     // ),
     entry: {
-      core: "./src-client/shared/core/core.ts",
-      ["polyfills-base"]: "./src-client/shared/polyfills/polyfills-base.ts"
+      core: "./src-client/core/core.ts",
+      header: "./src-client/partials/header/header.ts",
+      logo: "./src-client/partials/logo/logo.ts"
     },
     output: {
       filename: "[name].js",
@@ -33,18 +34,14 @@ module.exports = (env = {}, argv = {}) => {
         {
           test: /\.css$/,
           use: [
-            isProd ? MiniCssExtractPlugin.loader : "style-loader",
+            MiniCssExtractPlugin.loader,
+            // isProd ? MiniCssExtractPlugin.loader : "style-loader",
             "css-loader"
           ]
         },
         {
-          test: /\.tsx?$/,
-          use: "awesome-typescript-loader",
-          exclude: /node_modules/
-        },
-        {
           test: /\.ts?$/,
-          use: "awesome-typescript-loader",
+          use: "ts-loader",
           exclude: /node_modules/
         }
       ]

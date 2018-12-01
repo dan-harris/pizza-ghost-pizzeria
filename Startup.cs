@@ -45,7 +45,8 @@ namespace PizzaGhostPizzeria
         /// </summary>
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
-            if (env.IsDevelopment())
+
+            if (env.IsEnvironment("dev"))
             {
                 app.UseWebpackDevMiddleware(new WebpackDevMiddlewareOptions
                 {

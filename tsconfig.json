@@ -1,12 +1,15 @@
 {
   "compilerOptions": {
     "outDir": "./wwwroot/client-dist/",
-    "noImplicitAny": true,
-    "module": "es6",
+    "noImplicitAny": false,
     "target": "es5",
-    "jsx": "react",
+    // "jsx": "react",
+    "module": "commonjs",
     "moduleResolution": "node",
+    "types": ["node", "reflect-metadata"],
     "sourceMap": true,
-    "lib": ["es2016", "dom"]
+    "lib": ["es6", "dom"],
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true
   }
 }
