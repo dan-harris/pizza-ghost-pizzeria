@@ -3,19 +3,17 @@ import { customElement as CustomElement, html, LitElement, property as Property 
 @CustomElement('my-element')
 class MyElement extends LitElement {
 
-    @Property()
-    mood: string;
+    @Property({ type: Number })
+    count: number;
 
     constructor() {
         super();
-        this.mood = '🔥';
     }
 
     render() {
         return html`
-        <style> .mood { color: green; } </style>
-        Web Components are 
-        <span class="mood">${this.mood}</span>!
+        <style> .count { font-size: 1.3rem; opacity: 0.8; } </style>
+        <span class="count">${this.count}</span>
         `;
     }
 

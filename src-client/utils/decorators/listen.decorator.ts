@@ -1,9 +1,7 @@
-import { StateChange } from "../../models/state-change.model";
-
 /**
- * listen for a state change & call decorated function
+ * listen for an event & call decorated function
  */
-export function OnStateChange<T extends object>(statePropKey: string) {
+export function Listen(event: string, target: EventTarget | string = document, options: boolean | AddEventListenerOptions = {}) {
     return (decoratorTarget: any, propKey: string, descriptor: any) => {
 
         // some of the following code for binding tomfoolery is care of;
@@ -26,7 +24,13 @@ export function OnStateChange<T extends object>(statePropKey: string) {
                 });
 
                 // add an event listener, then call decorated method with apropriate 'this'
-                instance[statePropKey].onStateChange(originalMethod.bind(instance) as (stateChange: StateChange<T>) => Promise<any>)
+                if (typeof target === "string") {
+                    // attempt to look for current instance properties
+                    const queryTarget: EventTarget = instance[target]
+                        ? instance[target]
+                        : document.querySelector(target);
+                    queryTarget.addEventListener(event, (...args) => originalMethod.apply(instance, args), options);
+                } else target.addEventListener(event, (...args) => originalMethod.apply(instance, args), options);
 
                 // the first invocation (per instance) will return the bound method from here. Subsequent calls will never reach this point, due to the way
                 // javaScript runtimes look up properties on objects; the bound method, defined on the instance, will effectively hide it.

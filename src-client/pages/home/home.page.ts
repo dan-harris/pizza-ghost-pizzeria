@@ -1,17 +1,15 @@
 import { Injectable } from 'injection-js';
 import 'reflect-metadata';
 import { initPage } from "../../models/page.model";
-import { StateChange } from '../../models/state-change.model';
-import { StateContext } from '../../models/state-context.model';
-import { Listen } from '../../utils/decorators/listen';
-import { OnStateChange } from '../../utils/decorators/on-state-change.decorator';
-import { Query } from '../../utils/decorators/query';
-import { State } from '../../utils/decorators/state.decorator';
+import { Bind } from '../../utils/decorators/bind.decorator';
+import { Listen } from '../../utils/decorators/listen.decorator';
+import { Query } from '../../utils/decorators/query.decorator';
+import { Watch } from '../../utils/decorators/watch.decorator';
 
 @Injectable()
 class Http {
     print(): void {
-        console.log('hello');
+        console.log('👏', 'http');
     }
 }
 
@@ -21,36 +19,40 @@ class HomePage {
     @Query('.pgp-logo')
     logoElement: HTMLElement;
 
-    @State<{ count: number }>({ count: 1 })
-    counter: StateContext<{ count: number }>;
+    @Query('my-element')
+    countElement: HTMLElement;
+
+    @Bind<{ count: number }>({ count: 1 })
+    counter: { count: number };
 
     constructor(private http: Http) {
         this.http.print();
         console.log('😬', { this: this });
         console.log('🚧', { logoElement: this.logoElement });
-        // console.log('🦄', { counter: this.counter.getState() });
-        this.counter.setState({ count: 3 });
-        // this.counter.onStateChange(async ({ state, oldState }) => { console.log('🐤', { oldState, newState: state }) })
+        this.countElement.setAttribute('count', this.counter.count.toString())
     }
 
-    @Listen('click', this.logoElement)
+    @Listen('click', '.pgp-logo')
     onClickAnywhere(event: any) {
         console.log('😬', { this: this });
         console.log('🚧', { logoElement: this.logoElement });
         this.http.print();
-        this.counter.setState({ count: this.counter.getState().count + 1 });
+        this.counter.count = this.counter.count + 1;
     }
 
-    @OnStateChange<{ count: number }>('counter')
-    logState({ state, oldState, patchState }: StateChange<{ count: number }> | any) {
-        console.log('🐤', { oldState, newState: state });
-        patchState({ count: 7 });
+    @Watch<{ count: number }>('counter')
+    logState({ count }: { count: number }) {
+        console.log('🐤', { count });
+        this.http.print();
+        if (count % 2 === 0) this.logoElement.style.opacity = '0';
+        else this.logoElement.style.opacity = '1';
     }
 
-    @OnStateChange<{ count: number }>('counter')
-    logState2({ state, oldState, patchState }: StateChange<{ count: number }> | any) {
-        console.log('🦄', { oldState, newState: state });
-        patchState({ count: 4 });
+    @Watch<{ count: number }>('counter')
+    logState2({ count }: { count: number }) {
+        // console.log('🦄', { count });
+        this.http.print();
+        this.countElement.setAttribute('count', count.toString())
     }
 }
 
