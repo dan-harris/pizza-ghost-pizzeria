@@ -2,7 +2,7 @@
   "compilerOptions": {
     "outDir": "./wwwroot/client-dist/",
     "noImplicitAny": false,
-    "target": "es5",
+    "target": "es2015",
     // "jsx": "react",
     "module": "commonjs",
     "moduleResolution": "node",

@@ -13,6 +13,10 @@
   "license": "ISC",
   "dependencies": {
     "@abraham/reflection": "^0.4.2",
+    "@polymer/lit-element": "^0.7.0",
+    "@webcomponents/custom-elements": "^1.2.1",
+    "@webcomponents/webcomponentsjs": "^2.2.3",
+    "custom-elements-ts": "0.0.16",
     "injection-js": "^2.2.1",
     "inversify": "^4.13.0",
     "promise-polyfill": "^8.1.0",

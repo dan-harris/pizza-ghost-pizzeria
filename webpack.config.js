@@ -12,8 +12,9 @@ module.exports = (env = {}, argv = {}) => {
     // ),
     entry: {
       core: "./src-client/core/core.ts",
-      header: "./src-client/partials/header/header.ts",
-      logo: "./src-client/partials/logo/logo.ts"
+      ["page-home"]: "./src-client/pages/home/home.page.ts",
+      ["partial-header"]: "./src-client/partials/header/header.partial.ts",
+      ["partial-logo"]: "./src-client/partials/logo/logo.partial.ts"
     },
     output: {
       filename: "[name].js",
@@ -56,11 +57,10 @@ module.exports = (env = {}, argv = {}) => {
 };
 
 function pathsToObject(paths = []) {
-  return paths.reduce(
-    (newObject, path) =>
-      newObject
-        ? { ...newObject, [getPathName(path)]: path }
-        : { [getPathName(path)]: path }
+  return paths.reduce((newObject, path) =>
+    newObject
+      ? { ...newObject, [getPathName(path)]: path }
+      : { [getPathName(path)]: path }
   );
 }
 

@@ -16,12 +16,9 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using PizzaGhostPizzeria.TagHelpers;
 
-namespace PizzaGhostPizzeria
-{
-    public class Startup
-    {
-        public Startup(IConfiguration configuration)
-        {
+namespace PizzaGhostPizzeria {
+    public class Startup {
+        public Startup (IConfiguration configuration) {
             Configuration = configuration;
         }
 
@@ -30,11 +27,10 @@ namespace PizzaGhostPizzeria
         /// <summary>
         /// This method gets called by the runtime. Use this method to add services to the container.
         /// </summary>
-        public void ConfigureServices(IServiceCollection services)
-        {
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+        public void ConfigureServices (IServiceCollection services) {
+            services.AddMvc ().SetCompatibilityVersion (CompatibilityVersion.Version_2_1);
 
-            services.Configure<RazorPagesOptions>(options => options.RootDirectory = "/src/Pages");
+            services.Configure<RazorPagesOptions> (options => options.RootDirectory = "/src/Pages");
 
             // add tag helpers
             // this.AddTagHelperServices(services);
@@ -43,34 +39,21 @@ namespace PizzaGhostPizzeria
         /// <summary>
         /// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         /// </summary>
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
-        {
+        public void Configure (IApplicationBuilder app, IHostingEnvironment env) {
 
-            if (env.IsEnvironment("dev"))
-            {
-                app.UseWebpackDevMiddleware(new WebpackDevMiddlewareOptions
-                {
-                    ProjectPath = Directory.GetCurrentDirectory(),
-                    HotModuleReplacement = true
+            if (env.IsEnvironment ("dev")) {
+                app.UseWebpackDevMiddleware (new WebpackDevMiddlewareOptions {
+                    ProjectPath = Directory.GetCurrentDirectory (),
+                        HotModuleReplacement = true
                 });
-                app.UseDeveloperExceptionPage();
-            }
-            else
-            {
-                app.UseHsts();
+                app.UseDeveloperExceptionPage ();
+            } else {
+                app.UseHsts ();
             }
 
-            app.UseHttpsRedirection();
-            app.UseStaticFiles();
-            app.UseMvc();
+            app.UseHttpsRedirection ();
+            app.UseStaticFiles ();
+            app.UseMvc ();
         }
-
-        /// <summary>
-        /// helper function to add all tag helpers as injectables
-        /// </summary>
-        // private void AddTagHelperServices(IServiceCollection services)
-        // {
-        //     services.AddTransient<ITagHelperComponent, ClientScriptTagHelperComponent>();
-        // }
     }
 }
