@@ -5,6 +5,7 @@ import { Bind } from '../../utils/decorators/bind.decorator';
 import { Listen } from '../../utils/decorators/listen.decorator';
 import { Query } from '../../utils/decorators/query.decorator';
 import { Watch } from '../../utils/decorators/watch.decorator';
+import { CustomElement } from '../../utils/types/custom-element.type';
 
 @Injectable()
 class Http {
@@ -20,7 +21,7 @@ class HomePage {
     logoElement: HTMLElement;
 
     @Query('my-element')
-    countElement: HTMLElement;
+    countElement: CustomElement;
 
     @Bind<{ count: number }>({ count: 1 })
     counter: { count: number };
@@ -52,7 +53,7 @@ class HomePage {
     logState2({ count }: { count: number }) {
         // console.log('🦄', { count });
         this.http.print();
-        this.countElement.setAttribute('count', count.toString())
+        this.countElement.count = count.toString();
     }
 }
 

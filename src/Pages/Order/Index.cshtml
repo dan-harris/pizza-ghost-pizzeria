@@ -1,3 +1,18 @@
 @page
-
-<p>hello order page</p>
+@using Microsoft.AspNetCore.Mvc.RazorPages
+@using PizzaGhostPizzeria.Pages
+@model OrderIndexModel
+<!-- set some initial state -->
+<pgp-client-state state="@Model.InitialState"></pgp-client-state>
+<p>
+    hello order page
+</p>
+<h1>Order Pizza</h1>
+<ul>
+    @foreach (var pizza in Model.Pizzas)
+    {
+        <li>
+            @pizza.Name @pizza.Icon
+        </li>
+    }
+</ul>

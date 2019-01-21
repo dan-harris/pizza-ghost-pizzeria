@@ -14,6 +14,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using PizzaGhostPizzeria.Services;
 using PizzaGhostPizzeria.TagHelpers;
 
 namespace PizzaGhostPizzeria {
@@ -32,8 +33,10 @@ namespace PizzaGhostPizzeria {
 
             services.Configure<RazorPagesOptions> (options => options.RootDirectory = "/src/Pages");
 
-            // add tag helpers
-            // this.AddTagHelperServices(services);
+            // add our mock services
+            services.AddSingleton<PizzaService> ();
+            services.AddSingleton<OrderService> ();
+
         }
 
         /// <summary>
