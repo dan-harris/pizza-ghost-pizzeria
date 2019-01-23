@@ -3,6 +3,7 @@
     "outDir": "./wwwroot/client-dist/",
     "noImplicitAny": false,
     "target": "es2015",
+    "resolveJsonModule": true,
     // "jsx": "react",
     "module": "commonjs",
     "moduleResolution": "node",

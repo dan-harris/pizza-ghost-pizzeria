@@ -14,6 +14,7 @@
   max-width: 840px;
   display: flex;
   position: relative;
+  margin: 0 0 6rem;
 }
 
 .pgp-logo .logo__heading {

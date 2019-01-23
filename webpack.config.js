@@ -13,6 +13,7 @@ module.exports = (env = {}, argv = {}) => {
     entry: {
       core: "./src-client/core/core.ts",
       ["page-home"]: "./src-client/pages/home/home.page.ts",
+      ["page-order"]: "./src-client/pages/order/order.page.ts",
       ["partial-header"]: "./src-client/partials/header/header.partial.ts",
       ["partial-logo"]: "./src-client/partials/logo/logo.partial.ts"
     },

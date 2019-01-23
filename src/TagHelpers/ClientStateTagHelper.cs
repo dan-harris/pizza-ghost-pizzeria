@@ -13,7 +13,7 @@ namespace PizzaGhostPizzeria.TagHelpers {
         private readonly string _clientInitialStateKey = "INITIAL_STATE";
 
         /// <summary>
-        /// set the src attribute with the client-app script location
+        /// set the tag as a script and include initial state as global JS object
         /// </summary>
         public override void Process (TagHelperContext context, TagHelperOutput output) {
             output.TagName = "script";

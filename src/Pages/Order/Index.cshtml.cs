@@ -23,7 +23,7 @@ namespace PizzaGhostPizzeria.Pages {
         /// current order based on customer id (if we have it)
         /// </summary>
         /// <value></value>
-        public Order Order;
+        public Order Order { get; set; }
 
         /// <summary>
         /// state object for client initial state
@@ -35,18 +35,20 @@ namespace PizzaGhostPizzeria.Pages {
 
         private readonly OrderService _orderService;
 
-        public OrderIndexModel (PizzaService pizzaService, OrderService orderService) {
+        private readonly IdentityService _identityService;
+
+        public OrderIndexModel (PizzaService pizzaService, OrderService orderService, IdentityService identityService) {
             _pizzaService = pizzaService;
             _orderService = orderService;
+            _identityService = identityService;
         }
 
         public async Task OnGetAsync () {
             // populate data
             Pizzas = await _pizzaService.GetPizzas ();
-            Order = await _orderService.GetOrderByCustomerId ();
+            Order = await _orderService.GetOrderByCustomerId (_identityService.CustomerId);
             // set initial state
             InitialState["order"] = JObject.FromObject (Order);
-            if (!Request.Cookies.ContainsKey ("cust")) Response.Cookies.Append ("cust", "1234", new CookieOptions { Expires = DateTime.Now.AddHours (1) });
         }
 
     }

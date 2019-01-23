@@ -4,15 +4,20 @@
 @model OrderIndexModel
 <!-- set some initial state -->
 <pgp-client-state state="@Model.InitialState"></pgp-client-state>
-<p>
-    hello order page
-</p>
-<h1>Order Pizza</h1>
-<ul>
-    @foreach (var pizza in Model.Pizzas)
-    {
-        <li>
-            @pizza.Name @pizza.Icon
-        </li>
-    }
-</ul>
+
+<!-- content wrapper -->
+<div class="content-wrapper content-wrapper--centred">
+
+    <!--  scripts -->
+    <pgp-script client-script="page-order" inline></pgp-script>
+
+
+    <h1>Order Pizza</h1>
+    <section class="item-container">
+        @foreach (var pizza in Model.Pizzas)
+        {
+            <pgp-el-pizza-order-card pizza="@pizza.toJson()"></pgp-el-pizza-order-card>
+        }
+    </section>
+
+</div>

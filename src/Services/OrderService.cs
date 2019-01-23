@@ -34,15 +34,19 @@ namespace PizzaGhostPizzeria.Services {
         /// 'retrieve' from our stored order list 🥡
         /// </summary>
         /// <returns></returns>
-        public async Task<Order> GetOrderByCustomerId (int? customerId = null) {
+        public async Task<Order> GetOrderByCustomerId (int customerId) {
             await Task.Delay (200);
-            var existingOrder = new Order ();
-            if (!customerId.HasValue) {
-                existingOrder.Id = Utils.GenerateRandomNo ();
+            var existingOrder = _orders.FirstOrDefault (order => order.CustomerId == customerId);
+
+            if (existingOrder == null) {
+                existingOrder = new Order {
+                Id = Utils.GenerateRandomNo (),
+                CustomerId = customerId,
+                PizzaOrders = new List<PizzaOrder> ()
+                };
                 _orders.Add (existingOrder);
-            } else {
-                existingOrder = _orders.FirstOrDefault (order => order.CustomerId == customerId);
             }
+
             return await Task.FromResult (existingOrder);
         }
 
@@ -50,10 +54,15 @@ namespace PizzaGhostPizzeria.Services {
         /// update a 'stored' order in our 'db' 
         /// </summary>
         /// <returns></returns>
-        public async Task<Order> UpdateOrder (Order updateOrder) {
+        public async Task<Order> UpdateOrderById (Order updateOrder) {
             await Task.Delay (200);
             var existingOrder = _orders.FirstOrDefault (order => order.Id == updateOrder.Id);
-            if (existingOrder.Id.HasValue) { existingOrder = updateOrder; }
+
+            // bail if no order
+            if (existingOrder == null) return await Task.FromResult<Order> (null);
+
+            existingOrder = updateOrder;
+
             return await Task.FromResult (existingOrder);
         }
 

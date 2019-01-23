@@ -1,29 +1,20 @@
-import '../components/counter.element';
-import "./core.css";
-import './_polyfills';
+/**
+ * barrel file for core js
+ * (essentially all shared code & css)
+ */
 
-// @Injectable()
-// class Http {
-//     print(): void {
-//         console.log('hello');
-//     }
-// }
-
-// @Injectable()
-// class Service {
-
-//     constructor(private http: Http) {
-//         this.http.print();
-//     }
-
-//     log(text: string): void {
-//         console.log('[LOG]', text);
-//     }
-// }
-
-// const injector = ReflectiveInjector.resolveAndCreate([Http, Service]);
-
-// console.log(injector.get(Service) instanceof Service);
-
-// const service: Service = injector.get(Service);
-// service.log('testing service')
+/**
+ * custom elements
+ * (must be imported so they're inckuded in js bundle)
+ */
+import "../components/counter.element";
+import "../components/pizza-order-card/pizza-order-card.element";
+/**
+ * global styles
+ */
+import "./styles/core.css";
+/**
+ * polyfills 😥
+ * (TODO: move to conditional polyfill loads)
+ */
+import "./_polyfills";

@@ -1,4 +1,5 @@
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace PizzaGhostPizzeria.Models {
 
@@ -14,6 +15,10 @@ namespace PizzaGhostPizzeria.Models {
 
         [JsonProperty ("icon")]
         public string Icon { get; set; }
+
+        public JObject toJson () {
+            return JObject.FromObject (this);
+        }
     }
 
 }

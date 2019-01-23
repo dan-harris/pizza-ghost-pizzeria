@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -14,6 +15,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using PizzaGhostPizzeria.Middleware;
 using PizzaGhostPizzeria.Services;
 using PizzaGhostPizzeria.TagHelpers;
 
@@ -37,6 +39,10 @@ namespace PizzaGhostPizzeria {
             services.AddSingleton<PizzaService> ();
             services.AddSingleton<OrderService> ();
 
+            // add other services
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor> ();
+            services.AddScoped<IdentityService> ();
+
         }
 
         /// <summary>
@@ -53,6 +59,8 @@ namespace PizzaGhostPizzeria {
             } else {
                 app.UseHsts ();
             }
+
+            app.UseMiddleware<CustomerIdentityMiddleware> ();
 
             app.UseHttpsRedirection ();
             app.UseStaticFiles ();

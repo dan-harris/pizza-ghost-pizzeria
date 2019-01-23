@@ -26,6 +26,13 @@ namespace PizzaGhostPizzeria {
             public const string POTATOES = "POTATOES";
         }
 
+        /// <summary>
+        /// custom cookie keys
+        /// </summary>
+        public static class CookieKeys {
+            public const string CUSTOMER_ID = "cust-id";
+        }
+
     }
 
 }
