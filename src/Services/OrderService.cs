@@ -61,9 +61,12 @@ namespace PizzaGhostPizzeria.Services {
             // bail if no order
             if (existingOrder == null) return await Task.FromResult<Order> (null);
 
-            existingOrder = updateOrder;
+            var index = _orders.IndexOf (existingOrder);
 
-            return await Task.FromResult (existingOrder);
+            // replace object in list
+            if (index != -1) _orders[index] = updateOrder;
+
+            return await Task.FromResult (updateOrder);
         }
 
     }

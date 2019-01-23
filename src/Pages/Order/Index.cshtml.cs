@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Antiforgery;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -37,10 +38,22 @@ namespace PizzaGhostPizzeria.Pages {
 
         private readonly IdentityService _identityService;
 
-        public OrderIndexModel (PizzaService pizzaService, OrderService orderService, IdentityService identityService) {
+        private readonly IAntiforgery _xsrf;
+
+        public OrderIndexModel (PizzaService pizzaService, OrderService orderService, IdentityService identityService, IAntiforgery Xsrf) {
             _pizzaService = pizzaService;
             _orderService = orderService;
             _identityService = identityService;
+            _xsrf = Xsrf;
+        }
+
+        public string GetAntiXsrfRequestToken () {
+            return _xsrf.GetAndStoreTokens (HttpContext).RequestToken;
+        }
+
+        public int GetOrderAmountByPizzaId (int pizzaId) {
+            var pizzaOrders = Order.PizzaOrders.FindAll (pizzaOrder => pizzaOrder.Pizza.Id == pizzaId);
+            return pizzaOrders.Count;
         }
 
         public async Task OnGetAsync () {
@@ -49,6 +62,20 @@ namespace PizzaGhostPizzeria.Pages {
             Order = await _orderService.GetOrderByCustomerId (_identityService.CustomerId);
             // set initial state
             InitialState["order"] = JObject.FromObject (Order);
+        }
+
+        public IActionResult OnGetTime () {
+            return new ContentResult { Content = DateTime.Now.ToString () };
+        }
+
+        public async Task<IActionResult> OnPutOrderAsync ([FromBody] Order order) {
+            if (order == null) return new ContentResult { Content = "{}", ContentType = "application/json" };
+            // make sure we have the current user
+            order.CustomerId = _identityService.CustomerId;
+            // update order
+            var updatedOrder = await _orderService.UpdateOrderById (order);
+            // pass updated data back to client
+            return new ContentResult { Content = updatedOrder.toJson ().ToString (), ContentType = "application/json" };
         }
 
     }

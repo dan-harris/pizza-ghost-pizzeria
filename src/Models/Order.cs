@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace PizzaGhostPizzeria.Models {
 
@@ -18,6 +19,10 @@ namespace PizzaGhostPizzeria.Models {
 
         [JsonProperty ("total")]
         private decimal Total { get; set; }
+
+        public JObject toJson () {
+            return JObject.FromObject (this);
+        }
     }
 
 }
