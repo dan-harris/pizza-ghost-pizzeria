@@ -15,7 +15,7 @@ namespace PizzaGhostPizzeria {
         /// constants for env var settings
         /// </summary>
         public const string ASPNETCORE_ENVIRONMENT_VAR = "ASPNETCORE_ENVIRONMENT";
-        public const string ENV_SETTINGS_FILENAME = "envsettings.json";
+        public const string ENV_SETTINGS_FILENAME = "env.json";
 
         /// <summary>
         /// set the default environment variable
