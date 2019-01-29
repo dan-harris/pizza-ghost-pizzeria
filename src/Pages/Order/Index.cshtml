@@ -3,18 +3,13 @@
 @using PizzaGhostPizzeria.Pages
 @model OrderIndexModel
 <!-- set some initial state -->
-<pgp-client-state state="@Model.InitialState"></pgp-client-state>
-
-<script>
-    window.XSRF_TOKEN = '@Model.GetAntiXsrfRequestToken()';
-</script>
+<pgp-client-state initial="@Model.InitialState" global="@Model.GlobalState"></pgp-client-state>
 
 <!-- content wrapper -->
 <div class="content-wrapper content-wrapper--centred">
 
     <!--  scripts -->
     <pgp-script client-script="page-order" inline></pgp-script>
-
 
     <h1>Order Pizza</h1>
     <section class="item-container">

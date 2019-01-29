@@ -12,5 +12,9 @@
     "lib": ["es6", "dom"],
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true
+    // "baseUrl": "./"
+    // "paths": {
+    //   "@pgp/*": ["./src-client/*"]
+    // }
   }
 }

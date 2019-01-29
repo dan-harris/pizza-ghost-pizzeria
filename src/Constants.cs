@@ -33,6 +33,15 @@ namespace PizzaGhostPizzeria {
             public const string CUSTOMER_ID = "cust-id";
         }
 
+        /// <summary>
+        /// client state keys
+        /// (generally used to stamp client state into client global variables)
+        /// </summary>
+        public static class ClientStateKeys {
+            public const string INITIAL_STATE = "INITIAL_STATE";
+            public const string GLOBAL_STATE = "GLOBAL_STATE";
+        }
+
     }
 
 }

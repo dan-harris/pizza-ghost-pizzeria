@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Razor.TagHelpers;
+using Microsoft.AspNetCore.Routing;
 using Microsoft.AspNetCore.SpaServices.Webpack;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -34,6 +35,7 @@ namespace PizzaGhostPizzeria {
             services.AddMvc ().SetCompatibilityVersion (CompatibilityVersion.Version_2_1);
 
             services.Configure<RazorPagesOptions> (options => options.RootDirectory = "/src/Pages");
+            services.Configure<RouteOptions> (options => options.LowercaseUrls = true);
 
             // add our mock services
             services.AddSingleton<PizzaService> ();

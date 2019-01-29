@@ -1,5 +1,6 @@
 import { Injectable } from "injection-js";
 import "reflect-metadata";
+import { ORDER_CART_SELECTOR } from "../../components/order-cart/order-cart.model";
 import {
   PizzaSelectedEvent,
   PIZZA_ORDER_CARD_EVENT_SELECTED,
@@ -8,18 +9,20 @@ import {
 import { Order } from "../../models-shared/order.model";
 import { PizzaOrder } from "../../models-shared/pizza-order.model";
 import { Pizza } from "../../models-shared/pizza.model";
-import { initPage } from "../../models/page.model";
+import { initPage, initPageState } from "../../models/page.model";
 import { HttpService } from "../../services/http.service";
 import { Bind } from "../../utils/decorators/bind.decorator";
 import { ListenAll } from "../../utils/decorators/listen-all.decorator";
 import { QueryAll } from "../../utils/decorators/query-all.decorator";
+import { Query } from "../../utils/decorators/query.decorator";
 import { Watch } from "../../utils/decorators/watch.decorator";
 import { CustomElement } from "../../utils/types/custom-element.type";
+import { OrderPageState } from "./order-page-state.model";
 
 /**
  * local constants
  */
-export const ORDER_PAGE_BASE_URL: string = "Order";
+export const ORDER_PAGE_BASE_URL: string = "order";
 export const ORDER_PAGE_HANDLER_TIME: string = "time";
 export const ORDER_PAGE_HANDLER_ORDER: string = "order";
 
@@ -28,37 +31,41 @@ class OrderPage {
   @QueryAll(PIZZA_ORDER_CARD_SELECTOR)
   pizzaOrderCards: NodeListOf<CustomElement>;
 
-  @Bind<{ order: Order }>({ order: null })
-  orderBinding: { order: Order };
+  @Query(ORDER_CART_SELECTOR)
+  orderCart: CustomElement;
+
+  @Bind<OrderPageState>({ order: null })
+  state: OrderPageState;
 
   constructor(private readonly httpService: HttpService) {
-    this.orderBinding.order = window["INITIAL_STATE"].order;
+    initPageState(this.state);
+    this.updateOrderCart(this.state);
   }
 
   @ListenAll(PIZZA_ORDER_CARD_EVENT_SELECTED, "pizzaOrderCards")
   onSelectPizzaOrderCard({ detail }: CustomEvent<PizzaSelectedEvent>) {
     const { pizza } = detail;
     console.log("🍕", { pizza });
-    this.orderBinding.order = {
-      ...this.orderBinding.order,
+    this.state.order = {
+      ...this.state.order,
       pizzaOrders: [
-        ...this.orderBinding.order.pizzaOrders,
-        { id: this.orderBinding.order.pizzaOrders.length, pizza }
+        ...this.state.order.pizzaOrders,
+        { id: this.state.order.pizzaOrders.length, pizza }
       ]
     };
   }
 
-  @Watch<{ order: Order }>("orderBinding")
-  async updateOrders({ order }: { order: Order }) {
+  @Watch<OrderPageState>("state")
+  async updateOrders({ order }: OrderPageState) {
     await this.httpService.put<Order>(
       `./${ORDER_PAGE_BASE_URL}?handler=${ORDER_PAGE_HANDLER_ORDER}`,
       order
     );
-    console.log("🥡", { order: order });
+    console.log("🥡", { order });
   }
 
-  @Watch<{ order: Order }>("orderBinding")
-  async updatePizzaOrderCards({ order }: { order: Order }) {
+  @Watch<OrderPageState>("state")
+  async updatePizzaOrderCards({ order }: OrderPageState) {
     this.pizzaOrderCards.forEach(pizzaOrderCard => {
       const pizza: Pizza = pizzaOrderCard.pizza;
       const matchingOrders: ReadonlyArray<
@@ -69,7 +76,14 @@ class OrderPage {
       pizzaOrderCard.amount = matchingOrders.length;
     });
   }
+
+  @Watch<OrderPageState>("state")
+  async updateOrderCart({ order }: OrderPageState) {
+    this.orderCart.orders = order.pizzaOrders;
+  }
 }
 
-// init the page
+/**
+ *  init the page
+ */
 initPage<OrderPage>(OrderPage, [HttpService]);

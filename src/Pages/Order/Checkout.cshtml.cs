@@ -12,7 +12,7 @@ using static PizzaGhostPizzeria.Constants;
 
 namespace PizzaGhostPizzeria.Pages {
 
-    public class OrderIndexModel : PageModel {
+    public class OrderCheckoutModel : PageModel {
 
         /// <summary>
         /// list of pizzas that are able to be ordered
@@ -32,29 +32,16 @@ namespace PizzaGhostPizzeria.Pages {
         /// </summary>
         public JObject InitialState = new JObject ();
 
-        /// <summary>
-        /// state object for client global state
-        /// (let's us preload client side with modifiable state)
-        /// </summary>
-        public JObject GlobalState = new JObject ();
-
         private readonly PizzaService _pizzaService;
 
         private readonly OrderService _orderService;
 
         private readonly IdentityService _identityService;
 
-        private readonly IAntiforgery _xsrf;
-
-        public OrderIndexModel (PizzaService pizzaService, OrderService orderService, IdentityService identityService, IAntiforgery Xsrf) {
+        public OrderCheckoutModel (PizzaService pizzaService, OrderService orderService, IdentityService identityService) {
             _pizzaService = pizzaService;
             _orderService = orderService;
             _identityService = identityService;
-            _xsrf = Xsrf;
-        }
-
-        private string GetAntiXsrfRequestToken () {
-            return _xsrf.GetAndStoreTokens (HttpContext).RequestToken;
         }
 
         public int GetOrderAmountByPizzaId (int pizzaId) {
@@ -66,10 +53,12 @@ namespace PizzaGhostPizzeria.Pages {
             // populate data
             Pizzas = await _pizzaService.GetPizzas ();
             Order = await _orderService.GetOrderByCustomerId (_identityService.CustomerId);
-            // set globals
-            GlobalState["xsrf"] = GetAntiXsrfRequestToken ();
             // set initial state
             InitialState["order"] = JObject.FromObject (Order);
+        }
+
+        public IActionResult OnGetTime () {
+            return new ContentResult { Content = DateTime.Now.ToString () };
         }
 
         public async Task<IActionResult> OnPutOrderAsync ([FromBody] PizzaGhostPizzeria.Models.Order order) {
