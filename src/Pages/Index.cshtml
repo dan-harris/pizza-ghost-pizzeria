@@ -1,14 +1,16 @@
 @page
+@model OrderIndexModel
+<!-- set some initial state -->
+<pgp-client-state initial="@Model.InitialState"></pgp-client-state>
 
 <!-- content wrapper -->
 <div class="content-wrapper content-wrapper--centred">
 
     <!--  scripts -->
     <pgp-script client-script="page-home" inline></pgp-script>
+    <pgp-style client-style="page-home"></pgp-style>
 
     <!-- pizzeria logo -->
     <pgp-partial name="_logo"></pgp-partial>
-
-    <my-element></my-element>
 
 </div>

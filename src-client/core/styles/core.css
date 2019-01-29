@@ -18,6 +18,7 @@ a {
   font-weight: 550;
   border-bottom: 2.5px solid;
   position: relative;
+  padding-bottom: 0.25rem;
 }
 
 a:hover:after {

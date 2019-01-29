@@ -7,7 +7,7 @@
  * custom elements
  * (must be imported so they're inckuded in js bundle)
  */
-import "../components/counter.element";
+import "../components/order-cart/order-cart.element";
 import "../components/pizza-order-card/pizza-order-card.element";
 /**
  * global styles

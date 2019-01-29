@@ -3,7 +3,7 @@ import {
   html,
   LitElement,
   property as Property
-} from "@polymer/lit-element";
+} from "lit-element";
 import { PizzaIcons } from "../../models-shared/pizza-icons.model";
 import { Pizza } from "../../models-shared/pizza.model";
 import { getPizzaIconUrl } from "../../utils/get-pizza-icon-url";

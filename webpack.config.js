@@ -14,6 +14,8 @@ module.exports = (env = {}, argv = {}) => {
       core: "./src-client/core/core.ts",
       ["page-home"]: "./src-client/pages/home/home.page.ts",
       ["page-order"]: "./src-client/pages/order/order.page.ts",
+      ["page-order-checkout"]:
+        "./src-client/pages/order-checkout/order-checkout.page.ts",
       ["partial-header"]: "./src-client/partials/header/header.partial.ts",
       ["partial-logo"]: "./src-client/partials/logo/logo.partial.ts"
     },

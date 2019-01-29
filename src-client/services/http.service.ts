@@ -1,20 +1,25 @@
 import { Injectable } from "injection-js";
+import { env } from "../models/env.model";
 
 /**
  * local constants
  */
-const defaultFetchOptions: RequestInit = {
-  headers: {
-    ["Content-Type"]: "application/json",
-    ["RequestVerificationToken"]: window["XSRF_TOKEN"]
-  }
-};
 
 /**
  * default api wrapper
  */
 @Injectable()
 export class HttpService {
+  get defaultFetchOptions(): RequestInit {
+    return {
+      headers: {
+        ["Content-Type"]: "application/json",
+        ["RequestVerificationToken"]:
+          window[env.WINDOW_GLOBAL_STATE_KEY][env.GLOBAL_STATE_XSRF_KEY]
+      }
+    };
+  }
+
   constructor() {}
 
   /**
@@ -33,7 +38,7 @@ export class HttpService {
    */
   async put<D, R = D>(url: string = "", data: D): Promise<R> {
     return fetch(url, {
-      ...defaultFetchOptions,
+      ...this.defaultFetchOptions,
       method: "PUT",
       body: JSON.stringify(data)
     }).then(response =>
